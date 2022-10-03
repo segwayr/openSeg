@@ -1,0 +1,39 @@
+Option Explicit
+
+Sub TargetDelete()
+Dim RR As Range
+Dim V1 As Variant, V2 As Variant
+Dim maxRow As Long, maxCol As Long
+Dim i As Long, j As Long, c As Long
+
+'変数RRに配列に代入したい範囲を少しずつ細かくしながらぶち込んで、配列に動的に代入する
+Set RR = Range("A1")
+Set RR = Range(RR, Range("A" & Rows.count.End(xlUp))
+Set RR = Intersect(RR.EntireRow, RR.Worksheet.UsedRange)
+V1 = RR.Value
+maxRow = UBound(V1): maxCol = UBound(V1,2)
+ReDim V2(1 To maxRow, 1 To maxCol)
+
+For i = 1 To maxRow
+    '下記のBool関数がTrueを返した場合、その行を配列に記録しない
+    '条件を増やす度に「V1(i, j)」の引数を増やしていく（jに指定の列番号）
+    'この場合3列目と2列目に検索をかけている
+    If DeleteRow (V1(i, 3), V1(i,2)) Then 
+    Else
+        c = c + 1
+        For j = 1 To maxCol
+            V2(c, j) = V1(i, j)
+        Next j
+    End If
+Next i
+RR.Value = V2 '配列に記録されたデータを動的な対象範囲RRのValueにぶち込んで反映させる
+
+End Sub
+
+Function DeleteRow(Va As Variant, Vb As Variant) As Boolean '上記で二列目（Va）と三列目（Vb）に対応する引数
+If Va = "" Or Bb = "TEST" Then 'もし三列目が空白か二列目がTESTと入っていたの場合、Trueを返す
+    DeleteRow = True
+Else
+    DeleteRow = False
+End If
+End Function
