@@ -1,48 +1,50 @@
-<html>
+<!--ただのパチンコ期待値計算機（笑）-->
+<!DOCTYPE html>
+<html lang="ja">
 <head>
 <title>pc-calc</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="initial-scale=1.0" />
-<script type="text/javascript">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0" />
+    <script type="text/javascript">
 
-function startCalc(){
-    var avr = document.tool.firstHit.value / document.tool.rTotal.value * document.tool.roundAVG.value;
-    var worth = ((avr / document.tool.firstHit.value) - (250 / document.tool.spningRate.value)) * (100 / document.tool.enob.value);
-    var func01 = document.tool.tnol.value * worth * document.tool.eRatio.value / 100;
-    var solid = (avr / document.tool.firstHit.value * (100 / document.tool.enob.value)) - (1000 / document.tool.spningRate.value);
-    var func02 = document.tool.tnol.value * solid * (100 - document.tool.eRatio.value) / 100;
-    var totalProfit = func01 + func02;
-    var perHour = totalProfit / document.tool.operatingTime.value;
-    var eRatioOther = "" + document.tool.eRatio.value   
-    totalProfit = totalProfit.toFixed(0);
-    perHour = perHour.toFixed(0);
+    function startCalc(){
+        var avr = document.tool.firstHit.value / document.tool.rTotal.value * document.tool.roundAVG.value;
+        var worth = ((avr / document.tool.firstHit.value) - (250 / document.tool.spningRate.value)) * (100 / document.tool.enob.value);
+        var func01 = document.tool.tnol.value * worth * document.tool.eRatio.value / 100;
+        var solid = (avr / document.tool.firstHit.value * (100 / document.tool.enob.value)) - (1000 / document.tool.spningRate.value);
+        var func02 = document.tool.tnol.value * solid * (100 - document.tool.eRatio.value) / 100;
+        var totalProfit = func01 + func02;
+        var perHour = totalProfit / document.tool.operatingTime.value;
+        var eRatioOther = "" + document.tool.eRatio.value   
+        totalProfit = totalProfit.toFixed(0);
+        perHour = perHour.toFixed(0);
 
-    if (document.tool.enob.value == "25"){
-        var eRatioOther = "";
+        if (document.tool.enob.value == "25"){
+            var eRatioOther = "";
+        }
+        form.result.value="Expected Value"+totalProfit+"yen\rHourly pay"+perHour+"yen\r\r"+document.tool.spningRate.value+" "+document.tool.roundAVG.value+" "+eRatioOther+"Hourly pay"+perHour+"yen";
     }
-    form.result.value="Expected Value"+totalProfit+"yen\rHourly pay"+perHour+"yen\r\r"+document.tool.spningRate.value+" "+document.tool.roundAVG.value+" "+eRatioOther+"Hourly pay"+perHour+"yen";
-}
 
-</script>
-</head>
-<body bgcolor="#000000" text="#FFFFFF">
+    </script>
+    </head>
+    <body bgcolor="#000000" text="#FFFFFF">
 
-<form name="tool">
-    <table>
-        <tr><td>First hit</td><td><input type="text" name="firstHit" size="8" value=""></td></tr>
-        <tr><td>Total number of lotteries</td><td><input type="text" name="tnol" size="8" value=""></td></tr>
-        <tr><td>Total probability in 1R</td><td><input type="text" name="rTotal" size="8" value=""></td></tr>
-        <tr><td>Spining rate</td><td><input type="text" name="spningRate" size="8" value=""></td></tr>
-        <tr><td>Round average</td><td><input type="text" name="roundAVG" size="8" value=""></td></tr>
-        <tr><td>Exchange number of ball</td><td><input type="text" name="enob" size="8" value="25"></td></tr>
-        <tr><td>Operating time</td><td><input type="text" name="operatingTime" size="8" value="10"></td></tr>
-        <tr><td>Equivalence ratio</td><td><input type="text" name="eRatio" size="8" value="100"></td></tr>
-    </table>
-    <input type="button" value="Output" onclick="startCalc()"><br>
-</form>
-<form name=form>
-    <textarea name="result" cols=40 rows=10></textarea>
-</form>
-<!--<p><input type="button" value="Return" onclick="document.location='tool.html';"></p>-->
+    <form name="tool">
+        <table>
+            <tr><td>First hit</td><td><input type="text" name="firstHit" size="8" value=""></td></tr>
+            <tr><td>Total number of lotteries</td><td><input type="text" name="tnol" size="8" value=""></td></tr>
+            <tr><td>Total probability in 1R</td><td><input type="text" name="rTotal" size="8" value=""></td></tr>
+            <tr><td>Spining rate</td><td><input type="text" name="spningRate" size="8" value=""></td></tr>
+            <tr><td>Round average</td><td><input type="text" name="roundAVG" size="8" value=""></td></tr>
+            <tr><td>Exchange number of ball</td><td><input type="text" name="enob" size="8" value="25"></td></tr>
+            <tr><td>Operating time</td><td><input type="text" name="operatingTime" size="8" value="10"></td></tr>
+            <tr><td>Equivalence ratio</td><td><input type="text" name="eRatio" size="8" value="100"></td></tr>
+        </table>
+        <input type="button" value="Output" onclick="startCalc()"><br>
+    </form>
+    <form name=form>
+        <textarea name="result" cols=40 rows=10></textarea>
+    </form>
+    <!--<p><input type="button" value="Return" onclick="document.location='URLとか入れて.html';"></p>-->
 </body>
 </html>
