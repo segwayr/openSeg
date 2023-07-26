@@ -9,7 +9,7 @@ while ($true) {
 	$form.Size = New-Object System.Drawing.Size(225, 250)
 	$form.FormBorderStyle = "Fixed3D"
 
-
+	#選択ボタン
 	$OKButton = New-Object System.Windows.Forms.Button
 	$OKButton.Location = New-Object System.Drawing.Point(20, 170)
 	$OKButton.Size = New-Object System.Drawing.Size(75, 30)
@@ -74,7 +74,7 @@ while ($true) {
 
 	#分の最大値
 	$labelMinuteMax = New-Object System.Windows.Forms.Label
-	$labelMinuteMax. Location = New-Object System.Drawing.Point(20, 80)
+	$labelMinuteMax.Location = New-Object System.Drawing.Point(20, 80)
 	$labelMinuteMax.Size = New-Object System.Drawing.Size(75, 20)
 	$labelMinuteMax.Text = "最大"
 
@@ -149,7 +149,7 @@ $hourer = $hourBox.Text
 $max = $minuteMaxBar.value + 1
 $min = $minuteMinBar.value + 1
 
-#分数は最小～最大指定、値が同じ場合乱数発生はエラーが出るので回避して最小値を入れる
+#分数は最小～最大指定、値が同じ場合乱数発生はエラーが出るのを回避して最小値を入れる
 if ($min -eq $max) {
 	$miniter = $min - 1
 } else {
@@ -164,17 +164,17 @@ $yearerMaker = $yearer
 $montherMaker = $monther
 $daterMaker = $dater
 
-#計算後に分がマイナスになった場合60分加算させる
+#作成日時を10～20分適当にずらして生成
 $hourerMaker = $hourer
 $temp = Get-Random -Maximum 21 -Minimum 11
 $miniterMaker = $miniter - $temp
 $secerMaker = Get-Random -Maximum 60 -Minimum 1
 
-#さらに0時下回った場合日付ごと-1する
+#計算後に分がマイナスになった場合60分加算させる
 if ($miniterMaker -lt 0) {
 	$miniterMaker = 60 + $miniterMaker
 	$hourerMaker = $hourerMaker - 1
-	# X  0          ?   t    -1    
+	#さらに0時下回った場合日付ごと-1する
 	if ($hourerMaker -lt 0) {
 		$hourerMaker = 24 + $hourerMaker
 		$yearerMaker = (([Datetime]$calBox.text).AddDays(-1)).ToString("yyyy")
