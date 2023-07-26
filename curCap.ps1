@@ -1,3 +1,5 @@
+#カーソル位置の画面座標と色をリアルタイムで教えてくれる
+
 Add-Type -AssemblyName System.Drawing, System.Windows.Forms
 $bitmap = New-Object System.Drawing.Bitmap(1, 1)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
