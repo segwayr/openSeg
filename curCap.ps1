@@ -1,4 +1,5 @@
 #カーソル位置の画面座標と色をリアルタイムで教えてくれる
+#座標操作や色分岐が必要なインターフェースがない、オブジェクトをキャッチできないようなアプリや業務を私用マクロ化する時など
 
 Add-Type -AssemblyName System.Drawing, System.Windows.Forms
 $bitmap = New-Object System.Drawing.Bitmap(1, 1)
