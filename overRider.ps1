@@ -23,38 +23,35 @@ while ($true) {
 	$CancelButton.Text = "Cancel"
 	$CancelButton.DialogResult = "Cancel"
 
-
+	#日付
 	$labelCal = New-Object System.Windows.Forms.Label
 	$labelCal.Location = New-Object System.Drawing.Point(20, 10)
 	$labelCal.Size = New-Object System.Drawing.Size(50, 20)
 	$labelCal.Text = "日付"
 
 
-	$calBox = New-Object System.Windows.Forms.Button
+	$calBox = New-Object System.Windows.Forms.DatetimePicker
 	$calBox.Location = New-Object System.Drawing.Point(20, 30)
 	$calBox.Size = New-Object System.Drawing.Size(110, 50)
 
-
-	$labelHour = New-Object System.Windows.Forms.DatetimePicker
+	#時
+	$labelHour = New-Object System.Windows.Forms.Label
 	$labelHour.Location = New-Object System.Drawing.Point(130, 10)
 	$labelHour.Size = New-Object System.Drawing.Size(50, 20)
 	$labelHour.Text = "時"
 
-
-
-
 	$hourBox = New-Object System.Windows.Forms.NumericUpDown
-	$hourBox.Location = New-Object System.Drawing.Point(130,30)
-	$hourBox.Size = New-Object System.Drawing.Size(55,50)
+	$hourBox.Location = New-Object System.Drawing.Point(130, 30)
+	$hourBox.Size = New-Object System.Drawing.Size(55, 50)
 	$hourBox.text = 9
 	$hourBox.TextAlign = "Right"
-	$hourBox.UpDownAlign= "Right"
+	$hourBox.UpDownAlign = "Right"
 	$hourBox.Maximum = "23"
 	$hourBox.Minimum = "0"
 	$hourBox.InterceptArrowKeys = $True
 
 
-	#   ??  l
+	#分の最小値
 	$labelMinuteMin = New-Object System.Windows.Forms.Label
 	$labelMinuteMin.Location = New-Object System.Drawing.Point(20, 60)
 	$labelMinuteMin.Size = New-Object System.Drawing.Size(65, 20)
@@ -67,15 +64,15 @@ while ($true) {
 	$minuteMinBar.minimum = 0
 	$minuteMinBar.largechange = "1"
 	$minuteMinBar.value = "20"
-	$labelMinuteMin.text = "最小" + $minuteMinBar.value + "分"
+	$labelMinuteMin.text = "最小 " + $minuteMinBar.value + "分"
 	$minuteMinBar.Add_ValueChanged({
-		$labelMinuteMin.text = "最小" + $minuteMinBar.value + "分"
+		$labelMinuteMin.text = "最小 " + $minuteMinBar.value + "分"
 		if ($minuteMaxBar.value -lt $minuteMinBar.value) {
 			$minuteMaxBar.value = $minuteMinBar.value
 		}
 	})
 
-	#   ?? l
+	#分の最大値
 	$labelMinuteMax = New-Object System.Windows.Forms.Label
 	$labelMinuteMax. Location = New-Object System.Drawing.Point(20, 80)
 	$labelMinuteMax.Size = New-Object System.Drawing.Size(75, 20)
@@ -89,21 +86,21 @@ while ($true) {
 	$minuteMaxBar.minimum = 0
 	$minuteMaxBar.largechange = "1"
 	$minuteMaxBar.value = "59"
-	$labelMinuteMax.text = "最大" + $minuteMaxBar.value + "分"
+	$labelMinuteMax.text = "最大 " + $minuteMaxBar.value + "分"
 	$minuteMaxBar.Add_ValueChanged({
-		$labelMinuteMax.text = "最大" + $minuteMax.value + "分"
+		$labelMinuteMax.text = "最大 " + $minuteMaxBar.value + "分"
 		if ($minuteMaxBar.value -lt $minuteMinBar.value) {
 			$minuteMinBar.value = $minuteMaxBar.value
 		}
 	})
 
-	# O   [ v     
+	#グループを作る    
 	$radioGr = New-Object System.Windows.Forms.GroupBox
 	$radioGr.Location = New-Object System.Drawing.Point(20, 100)
 	$radioGr.size = New-Object System.Drawing.Size(165, 60)
 	$radioGr.text = "設定"
 
-	# O   [ v ?  ?  W I { ^       
+	#グループの中のラジオボタンを作る
 	$normaler = New-Object System.Windows.Forms.RadioButton
 	$normaler.Location = New-Object System.Drawing.Point(20, 15)
 	$normaler.size = New-Object System.Drawing.Size(140, 20)
@@ -116,9 +113,10 @@ while ($true) {
 	$autoMaker.Text = "作成日自動調整"
 	$radioGr.Controls.AddRange(@($normaler, $autoMaker))
 
-	# t H [   ?e A C e        
+	#フォームの各アイテムを入れる       
 	$Form.Controls.AddRange(@($radioGr))
-	# t H [   ?  [ h
+
+	#フォームのロード
 	$form.AcceptButton = $OKButton
 	$form.CancelButton = $CancelButton
 	$form.Controls.Add($OKButton)
@@ -132,7 +130,7 @@ while ($true) {
 	$form.Controls.Add($minuteMaxBar)
 	$form.Controls.Add($labelMinuteMax)
 
-	# C x   g ?? l  
+	#イベントの戻り値等
 	$result = $form.ShowDialog()
 	if ($result -eq "Cancel") {
 		exit
@@ -147,32 +145,32 @@ $yearer = ([Datetime]$calBox.text).ToString("yyyy")
 $monther = ([Datetime]$calBox.text).ToString("MM")
 $dater = ([Datetime]$calBox.text).ToString("dd")
 $hourer = $hourBox.Text
-#      1  0 ???C   N       g
+#乱数は1が0なのでインクリメント
 $max = $minuteMaxBar.value + 1
 $min = $minuteMinBar.value + 1
 
-#     ?? ? ? w    l       ?         ?G   [   o  ??       ??  l      
-if ($min-eq $max) {
+#分数は最小～最大指定、値が同じ場合乱数発生はエラーが出るので回避して最小値を入れる
+if ($min -eq $max) {
 	$miniter = $min - 1
 } else {
 	$miniter = Get-Random -Maximum $max -Minimum $min
 }
 
-# b    0 `59 b     _  
+#秒数は0～59秒ランダム
 $secer = Get-Random -Maximum 60 -Minimum 1
 
-# ?      ? 
+#作成日時を指定
 $yearerMaker = $yearer
 $montherMaker = $monther
 $daterMaker = $dater
 
-# ?      10 `20   K   ?  ? ?   
+#計算後に分がマイナスになった場合60分加算させる
 $hourerMaker = $hourer
 $temp = Get-Random -Maximum 21 -Minimum 11
 $miniterMaker = $miniter - $temp
 $secerMaker = Get-Random -Maximum 60 -Minimum 1
 
-# v Z  ?    } C i X ??    ?60     Z      
+#さらに0時下回った場合日付ごと-1する
 if ($miniterMaker -lt 0) {
 	$miniterMaker = 60 + $miniterMaker
 	$hourerMaker = $hourerMaker - 1
@@ -186,11 +184,11 @@ if ($miniterMaker -lt 0) {
 }
 
 
-
+#なんかあったらエラーログ吐いてね
 try {
 		Set-ItemProperty $Args[0] -name LastWriteTime -value "$($yearer)/$($monther)/$($dater) $($hour):$($miniter):$($secer)"
 		if ($autoMaker.Checked) {
-			Set-ItemProperty $Args[0] -name CreationTime -value "$($yearer)/$($monther)/$($dater) $($hour):$($miniter):$($secer)"
+			Set-ItemProperty $Args[0] -name CreationTime -value "$($yearerMaker)/$($montherMaker)/$($daterMaker) $($hourMaker):$($miniterMaker):$($secerMaker)"
 
 		}
 } catch {
