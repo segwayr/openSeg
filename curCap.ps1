@@ -28,7 +28,7 @@ $label.Size = New-Object System.Drawing.Size(160, 40)
 $label.Font = New-Object System.Drawing.Font("ＭＳ ゴシック", 10)
 
 #プルダウン
-$pullLabel = New-Object System.Windows.Forms.Labele
+$pullLabel = New-Object System.Windows.Forms.Label
 $pullLabel.Location = New-Object System.Drawing.Point(10,55)
 $pullLabel.Size = New-Object System.Drawing.Size(50,10)
 $pullLabel.Font = New-Object System.Drawing.Font("ＭＳ ゴシック", 8)
