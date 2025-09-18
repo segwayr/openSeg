@@ -1,31 +1,16 @@
 @echo off
-setlocal enabledelayedexpansion
+set "BASE=%~1"
 
-:: 引数が無ければ終了
-if "%~1"=="" (
-    echo 使用方法: %~nx0 対象フォルダ
-    exit /b 1
+
+REM 最後に \ があると処理しにくいので削除
+if "%BASE:~-1%"=="\" set "BASE=%BASE:~0,-1%"
+
+for /R "%BASE%" %%F in (*) do (
+    REM %%F から BASE を取り除いて相対パスにする
+    set "REL=%%F"
+    setlocal enabledelayedexpansion
+    echo !REL:%BASE%\=!
+    endlocal
 )
-
-:: 探索対象フォルダ
-set TARGET=%~1
-
-:: 最初に対象フォルダ自体
-echo [%TARGET%]
-for %%F in ("%TARGET%\*") do (
-    if exist "%%F" echo %%~nxF
-)
-echo.
-
-:: サブフォルダを順番に処理
-for /R "%TARGET%" /D %%D in (*) do (
-    echo [%%~fD]
-    for %%F in ("%%D\*") do (
-        if exist "%%F" echo %%~nxF
-    )
-    echo.
-)
-
-endlocal
 
 pause
