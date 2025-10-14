@@ -5,7 +5,7 @@ Add-Type -AssemblyName System.Drawing, System.Windows.Forms
 $bitmap = New-Object System.Drawing.Bitmap(1, 1)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $Timer = New-Object System.Windows.Forms.Timer
-$dpiX = [Systen.Windows.Form.Screen]::PrimaryScreen.Bounds.Width / [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width
+$dpiX = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width / [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Width
 $scalePercent = [Math]::Round($dpiX * 100)
 
 $TimerTick= {
@@ -24,7 +24,7 @@ $Timer.Enabled = $TRUE
 $Timer.Start()
 
 $Form = New-Object System.Windows.Forms.Form
-$Form.Text = "color"
+$Form.Text = "Coordinate Meter"
 $Form.Size = New-Object System.Drawing.Size(260, 140)
 
 $label = New-Object System.Windows.Forms.Label
@@ -44,7 +44,7 @@ $dpiScaling.Location = New-Object System.Drawing.Point (10,75)
 $dpiScaling.size = New-Object System.Drawing.Size(50,30)
 $dpiScaling.DropDownStyle = "DropDown"
 $dpiScaling.FlatStyle = "standard"
-$dpiScaling.font = $Font
+$dpiScaling.font = New-Object System.Drawing.Font("ＭＳ ゴシック", 8)
 $dpiScaling.text = "$scalePercent%"
 
 [void] $dpiScaling.Items.Add("100%")
