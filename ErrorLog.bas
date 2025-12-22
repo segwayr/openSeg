@@ -52,13 +52,13 @@ Public Sub Raise(ByVal errObj As ErrObject, ErrorMessage As String)
        
       'ログに書き込むテキストを設定
       errorText = "==================================================" & vbCrLf & _
-                        "   Timestamp     : " & Format(Now, "YYYY/MM/DD HH:mm:ss") & vbCrLf & _
-                        "   User            : " & Environ("USERNAME") & vbCrLf & _
-                        "   File            : " & ThisWorkbook.Name & vbCrLf & _
-                        "   Procedure     : " & currentModuleName_ & "." & currentProcedureName_ & vbCrLf & _
+                        "   Timestamp   : " & Format(Now, "YYYY/MM/DD HH:mm:ss") & vbCrLf & _
+                        "   User        : " & Environ("USERNAME") & vbCrLf & _
+                        "   File        : " & ThisWorkbook.Name & vbCrLf & _
+                        "   Procedure   : " & currentModuleName_ & "." & currentProcedureName_ & vbCrLf & _
                         "   Description : " & ErrorMessage & vbCrLf & _
-                        "   StackTrace   : " & callStack_ & vbCrLf & _
-                        "   Execution     : " & stackTrace_ & vbCrLf
+                        "   CallStack   : " & callStack_ & vbCrLf & _
+                        "   StackTrace  : " & stackTrace_ & vbCrLf
        
       'ログファイルに出力
       fileNumber = FreeFile
@@ -137,5 +137,4 @@ Private Sub UpdateCallStack()
             callStack_ = Join(stackList.ToArray(), " -> ")
       End If
 End Sub
-
 
