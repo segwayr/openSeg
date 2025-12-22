@@ -2,26 +2,26 @@
 
 '----------------------------------------------------------------------------------------------------+
 '-------------------------------------------*使用方法*-----------------------------------------------+
-'----------------------------------------------------------------------------------------------------+
-'各モジュールのトップステートメントに以下の定数を記述                                                                        +
-'     Private Const MODULE_NAME = "＜モジュール名＞"                                                                             +
-'                                                                                                                                                      +
-'各プロシージャの最初に以下の定数、トラップを記述                                                                              +
-'     Const PROCEDURE_NAME = "＜プロシージャ名＞"                                                                                 +
-'     Call TraceListPush(MODULE_NAME, PROCEDURE_NAME)                                                                           +
-'     On Error GoTo ErrorHandler                                                                                                           +
-'                                                                                                                                                      +
-'各プロシージャの末尾に以下のスクリプトを記述                                                                                    +
-'CleanExit:                                                                                                                                       +
-'      ErrorLog.TraceListPop                                                                                                                 +
-'Exit Sub '※もしくはExit Function                                                                                                     +
-'ErrorHandler:                                                                                                                                   +
-'      If Err.Number <> 0 Then                                                                                                              +
-'            MsgBox "エラーが発生したため中断しました。" & vbCrLf & _                                                      +
-'                        "エラー番号：" & Err.Number & vbCrLf & "概要：" & Err.Description, vbExclamation      +
-'            ErrorLog.Raise Err, Err.Description                                                                                      +
-'     End If                                                                                                                                         +
-'     Resume CleanExit                                                                                                                          +
+'----------------------------------------------------------------------------------------------------+'
+''各モジュールのトップステートメントに以下の定数を記述
+'     Private Const MODULE_NAME = "＜モジュール名＞"
+'
+''各プロシージャの最初に以下の定数､トラップを記述
+'    Const PROCEDURE_NAME = "＜プロシージャ名＞"
+'    Call TraceListPush(MODULE_NAME, PROCEDURE_NAME)
+'    On Error GoTo ErrorHandler
+''
+''各プロシージャの末尾に以下のスクリプトを記述
+'CleanExit:
+'    ErrorLog.TraceListPop
+'Exit Sub '※もしくはExit Function
+'ErrorHandler:
+'    If Err.Number <> 0 Then
+'        MsgBox "エラーが発生したため中断しました。" & vbCrLf & _
+'        "エラー番号：" & Err.Number & vbCrLf & "概要：" & Err.Description, vbExclamation
+'        ErrorLog.Raise Err, Err.Description
+'    End If
+'    Resume CleanExit
 '----------------------------------------------------------------------------------------------------+
 
 Option Explicit
@@ -139,3 +139,4 @@ Private Sub UpdateCallStack()
             callStack_ = Join(stackList.ToArray(), " -> ")
       End If
 End Sub
+
