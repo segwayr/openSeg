@@ -554,5 +554,3 @@ CleanExit:
 ErrorHandler:
         Err.Raise Err.Number, MODULE_NAME & "." & PROCEDURE_NAME, Err.Description
 End Function
-
-TryOrderはGetTextのエラーハンドラに軽微なバグがあったので修正
