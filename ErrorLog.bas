@@ -2,7 +2,7 @@
 '-------------------------------------------*使用方法*-----------------------------------------------+
 '----------------------------------------------------------------------------------------------------+
 '各モジュールのトップステートメントに以下の定数を記述
-'   Private Const MODULE_NAME As String = "＜モジュール名＞"
+'Private Const MODULE_NAME As String = "＜モジュール名＞"
 '
 '各プロシージャの構成を以下のものにする
 '・親プロシージャの場合
@@ -18,7 +18,7 @@
 'ErrorLog.TraceListPop
 'Exit Sub 'or Function
 'ErrorHandler:
-'    ErrorLog.Raise Err.Number, Err.Description
+'ErrorLog.Raise Err.Number, Err.Description
 '
 '・子プロシージャの場合
 'Const PROCEDURE_NAME As String = "＜プロシージャ名＞"
@@ -32,7 +32,7 @@
 'ErrorLog.TraceListPop
 'Exit Sub 'or Function
 'ErrorHandler:
-'        Err.Raise Err.Number, MODULE_NAME & "." & PROCEDURE_NAME, Err.Description
+'Err.Raise Err.Number, MODULE_NAME & "." & PROCEDURE_NAME, Err.Description
 '
 'その他 途中で行う処理で以下の物は左から右へ変換が必要
 'On Error GoTo 0 → On Error GoTo ErrorHandler
@@ -119,9 +119,6 @@ Public Sub Raise(ByVal errorNumber As Long, ByVal errorMessage As String)
     Open logPath For Append As #fileNumber
         Print #fileNumber, errorText
     Close #fileNumber
-    
-    '初期化
-    Call ErrorLog.Initialize
     
     'エラーダイアログを発報
     AppActivate Application.Caption
@@ -278,3 +275,4 @@ Private Sub TrimStack(ByRef stackList As Collection, ByVal stackThreshold As Lon
     Loop
     
 End Sub
+
