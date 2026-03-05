@@ -302,13 +302,15 @@ Public Function GetResult(ByVal method As methodType) As Variant
                 End If
                 GetResult = WebDriver.ExecuteScript(scriptStr)
                 
-            Case methodType.mGetValue:     GetResult = webElm.Item(IndexNumber).Value
-            Case methodType.mIsSelected:   GetResult = webElm.Item(IndexNumber).IsSelected
-            Case methodType.mIsEnabled:   GetResult = webElm.Item(IndexNumber).IsEnabled
-            Case methodType.mIsDisplayed:  GetResult = webElm.Item(IndexNumber).IsDisplayed
+            Case methodType.mGetValue:      GetResult = webElm.Item(IndexNumber).Value
+            Case methodType.mIsSelected:    GetResult = webElm.Item(IndexNumber).IsSelected
+            Case methodType.mIsEnabled:     GetResult = webElm.Item(IndexNumber).IsEnabled
+            Case methodType.mIsDisplayed:   GetResult = webElm.Item(IndexNumber).IsDisplayed
             Case methodType.mGetSelectText: GetResult = webElm.Item(IndexNumber).AsSelect.SelectedOption.Text
-            Case methodType.mGetAttribute: GetResult = webElm.Item(IndexNumber).Attribute(InputText)
-            Case methodType.mInnerText:    GetResult = GetText()
+            Case methodType.mGetAttribute:  GetResult = webElm.Item(IndexNumber).Attribute(InputText)
+            Case methodType.mInnerText
+                On Error GoTo ErrorHandler  'GetText内でのエラーキャッチの為
+                GetResult = GetText()
             
                     
             Case Else: Err.Raise 513, Description:="不正なメソッドです。引数を確認してください。"
@@ -348,12 +350,12 @@ Private Function GetText() As Variant
     Const PROCEDURE_NAME As String = "GetText"
     Call ErrorLog.TraceListPush(MODULE_NAME, PROCEDURE_NAME)
     On Error GoTo ErrorHandler
-    
+
     Dim results() As String
     Dim curObj As Object
     Dim startTime As Double
     Dim count As Long
-    
+
     startTime = Timer
     Do While Timer - startTime < TimeoutSec
         On Error Resume Next
@@ -552,3 +554,5 @@ CleanExit:
 ErrorHandler:
         Err.Raise Err.Number, MODULE_NAME & "." & PROCEDURE_NAME, Err.Description
 End Function
+
+TryOrderはGetTextのエラーハンドラに軽微なバグがあったので修正
